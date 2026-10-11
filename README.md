@@ -1,52 +1,88 @@
 # Panopticon — Intelligent Exam Proctoring AI
 
+An exploratory machine-learning project that analyzes exam-related telemetry and system events to predict supplied event labels.
+
 ## Overview
-Panopticon is an exploratory machine-learning prototype that analyzes
-exam-related telemetry and system events to predict supplied event labels.
 
-## Features
-- Timestamp alignment of telemetry and system events
-- Missing-data inspection
-- Feature engineering
+Panopticon explores how gaze-angle measurements, audio levels, and tab-switch counts can be combined into an event-level classification pipeline. It uses a Random Forest classifier and chronological model evaluation.
+
+**Project status:** Research prototype. The supplied labels have not been independently verified, and the model is not validated for real-world cheating detection.
+
+## Key Features
+
+- Timestamp alignment of video telemetry and system events
+- Missing-data inspection and preprocessing
+- Event-level feature engineering
 - Random Forest classification
-- Chronological train, validation, and test splits
-- Model evaluation and visualization
+- Chronological training, validation, and test splits
+- Confusion matrix, ROC curve, precision-recall curve, and feature-importance analysis
 
-## Technology Stack
+## Tech Stack
+
 - Python
 - Pandas and NumPy
 - Scikit-learn
 - Matplotlib
-- Google Colab
+- Google Colab / Jupyter Notebook
 
-## Dataset
-The project uses video telemetry and system-event CSV files.
+## Project Visualizations
 
-Before publishing, document the dataset source and explain how the
-is_cheating labels were created. Do not upload datasets without
-permission to redistribute them.
+### Label Distribution and Feature Summary
+
+![Label distribution and feature summary](label_distribution_and_feature_summary.png)
+
+### Confusion Matrix
+
+![Test confusion matrix](confusion_matrix.png)
+
+### Feature Importance
+
+![Random Forest feature importance](feature_importance.png)
+
+### ROC Curve
+
+![ROC curve](roc_curve.png)
+
+### Precision–Recall Curve
+
+![Precision-recall curve](precision_recall_curve.png)
+
+## Preliminary Evaluation
+
+The recorded experiment used a chronological split with 91 training records, 30 validation records, and 31 test records.
+
+| Metric | Test result |
+|---|---:|
+| Accuracy | 96.77% |
+| Precision for label 1 | 94.74% |
+| Recall for label 1 | 100.00% |
+| F1-score | 97.30% |
+| ROC-AUC | 0.9786 |
+
+These are preliminary results from a small test set of 31 records. They measure prediction of the supplied labels, not verified real-world cheating. The data source and label-generation method must be documented before drawing broader conclusions.
 
 ## Running the Project
-1. Install the dependencies in requirements.txt.
-2. Open the notebook in Google Colab.
-3. Upload the required CSV files when prompted.
+
+1. Install the dependencies in `requirements.txt`.
+2. Open `Panopticon_Clean_Research_Notebook (1).ipynb` in Google Colab.
+3. Upload the required video-telemetry and system-event CSV files when prompted.
 4. Run the notebook cells in order.
-5. Review the generated evaluation metrics and plots.
+5. Review the evaluation metrics and generated visualizations.
 
-## Evaluation
-The model is evaluated using chronological training, validation,
-and test partitions. The decision threshold is selected using
-validation data.
+The datasets are not included in this repository. Their source and redistribution permissions must be verified separately.
 
-Add the final verified metrics from your completed notebook run.
+## Limitations and Responsible Use
 
-## Limitations
-- The dataset contains a small number of labelled events.
+- The labelled dataset is small.
 - The labels have not been independently verified.
-- High scores do not establish real-world cheating detection.
-- This is an exploratory classifier, not a validated proctoring system.
+- High test scores do not prove generalization to real examinations.
+- Predictions should not be used alone to accuse or penalize a student.
+- Real-world deployment would require independent validation, privacy protections, bias assessment, and human review.
 
-## Responsible Use
-Predictions should not be used alone to accuse or penalize students.
-Real-world use would require independent validation, privacy protections,
-bias assessment, and human review.
+## Future Improvements
+
+- Verify dataset provenance and label definitions.
+- Evaluate on additional independent datasets.
+- Compare Random Forest with suitable baseline models.
+- Study false-positive rates across different data conditions.
+- Improve reproducibility and experiment documentation.
